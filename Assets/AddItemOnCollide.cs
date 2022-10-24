@@ -16,7 +16,7 @@ public class AddItemOnCollide : MonoBehaviour
     {
         if (!hasDone)
         {
-            GameObject.Find("Player").GetComponent<InventoryManager>().AddItem(item, amount);
+            GameObject.Find("Player").GetComponent<InventoryManager>().AddItemVoid(item, amount);
             hasDone = true;
             if (Destroy)
             {

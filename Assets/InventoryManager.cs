@@ -27,25 +27,90 @@ public class InventoryManager : MonoBehaviour
 
     private int stackIndex;
 
-    public void AddItem(string str, int amount)
+    public void AddItemVoid(string str, int amount)
     {
+        StartCoroutine(AddItem(str, amount));
+    }
+
+    public IEnumerator AddItem(string str, int amount)
+    {
+        int originalAmount = amount;
         int index = 0;
         int index2 = 0;
         Item lastItem = null;
+        while (amount > 0)
+        {
+        yield return new WaitForSeconds(0.01f);
+        Debug.Log("re-looping...");
         foreach(Item item in currentItems)
         {
-            if (item.name == str && amount < item.stackSize || item.type == ItemType.none)
+            if (item.name == str)
+            {
+                if (Resources.Load<GameObject>("items/" + str).GetComponent<Item>().stackSize - stacks[index] == amount)
+                {
+                    Debug.Log("item is the same and the amount is equal to the stack size minus the current stack.");
+                    stacks[index] = amount;
+                    amount = 0;
+                }
+                if (stacks[index] == Resources.Load<GameObject>("items/" + str).GetComponent<Item>().stackSize)
+                {
+                    Debug.Log("continuing...");
+                    continue;
+                }
+                if (stacks[index] < Resources.Load<GameObject>("items/" + str).GetComponent<Item>().stackSize)
+                {
+                    Debug.Log("item is the same and the current stak is less than the stack size.");
+                    int @int = item.stackSize - stacks[index];
+                    stacks[index] += amount;
+                    amount -= @int;
+                }
+            }
+            if (index == 0 && item.type == ItemType.none || item.type == ItemType.none && lastItem != null && lastItem.type != ItemType.none)
             {
                 currentItems[index] = Resources.Load<GameObject>("items/" + str).GetComponent<Item>();
-                stacks[index] += amount;
-                GameObject.Find("Inventory").GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("sounds/pickupitem"));
-                GameObject.Find("ItemPopup_Image").GetComponent<Image>().sprite = currentItems[index].icon;
-                GameObject.Find("ItemPopup_Text").GetComponent<TextMeshProUGUI>().text = "+" + amount;
-                GameObject.Find("GotItemPopup").GetComponent<Animation>().Play("DoItemPopup");
-                return;
+                if (amount <= Resources.Load<GameObject>("items/" + str).GetComponent<Item>().stackSize)
+                {
+                    Debug.Log("type is none and amount is equal to or less than the stack size.");
+                    stacks[index] = amount;
+                    amount = 0; 
+                }
+                if (amount > Resources.Load<GameObject>("items/" + str).GetComponent<Item>().stackSize)
+                {
+                    Debug.Log("type is none and amount is more than the stack size.");
+                    stacks[index] = item.stackSize;
+                    amount -= item.stackSize;
+                }
+            }
+            else if (lastItem != null && lastItem.name == str)
+            {
+                if (Resources.Load<GameObject>("items/" + str).GetComponent<Item>().stackSize - stacks[index - 1] == amount)
+                {
+                    Debug.Log("item is the same and the amount is equal to the stack size minus the current stack.");
+                    stacks[index - 1] = amount;
+                    amount = 0;
+                }
+                if (stacks[index - 1] == Resources.Load<GameObject>("items/" + str).GetComponent<Item>().stackSize)
+                {
+                    Debug.Log("continuing...");
+                    continue;
+                }
+                if (stacks[index - 1] < Resources.Load<GameObject>("items/" + str).GetComponent<Item>().stackSize)
+                {
+                    Debug.Log("item is the same and the current stak is less than the stack size.");
+                    int @int = item.stackSize - stacks[index];
+                    stacks[index] += amount;
+                    amount -= @int;
+                }
             }
             index++;
+            lastItem = item;
         }
+        index = 0;
+        }
+        GameObject.Find("Inventory").GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("sounds/pickupitem"));
+        GameObject.Find("ItemPopup_Image").GetComponent<Image>().sprite = Resources.Load<GameObject>("items/" + str).GetComponent<Item>().icon;
+        GameObject.Find("ItemPopup_Text").GetComponent<TextMeshProUGUI>().text = "+" + originalAmount;
+        GameObject.Find("GotItemPopup").GetComponent<Animation>().Play("DoItemPopup");
     }
 
     public void ChangeItem(int index)
