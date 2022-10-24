@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - HoleBullet
+  - Bullet
+  - MultyPlayerCreateZoneFlagCommand1
+  - MultyPlayerCreateZone
+  - CapturePoint
+  - BazaZoneCommand2
+  - MultyPlayerCreateZoneCommand2
+  - MultyPlayerCreateZoneFlagCommand2
+  - MultyPlayerCreateZonePointZone1
+  - MultyPlayerCreateZoneCOOP
+  - BonusCreationZone
+  - MultyPlayerCreateZoneCommand1
+  - MultyPlayerCreateZonePointZone2
+  - EnemyCreationZone
+  - Portal
+  - CamFX
+  - BonusController
+  - Configurator
+  - NickLabelNGUI
+  - BazaZoneCommand1
+  - walkonit
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - walkonit
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
