@@ -23,6 +23,11 @@ public class DialogueController : MonoBehaviour
         StartCoroutine(StackDialogue("I'll starve if i dont find food soon. so I'd better get moving.", true));
     }
 
+    public static DialogueController GetInstance()
+    {
+        return GameObject.Find("Dialogue").GetComponent<DialogueController>();
+    }
+
     // Update is called once per frame
     void Update()
     {

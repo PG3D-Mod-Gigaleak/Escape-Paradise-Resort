@@ -7,4 +7,6 @@ public class Food : MonoBehaviour
     public float HungerGive;
 
     public AudioClip EatSound;
+
+    public float EatTimeMultiplier;
 }

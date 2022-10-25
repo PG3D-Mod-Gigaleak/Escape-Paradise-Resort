@@ -27,9 +27,19 @@ public class InventoryManager : MonoBehaviour
 
     private int stackIndex;
 
+    private Image EatBarFill;
+
+    private GameObject EatBar;
+
     public void AddItemVoid(string str, int amount)
     {
         StartCoroutine(AddItem(str, amount));
+    }
+
+    void Start()
+    {
+        EatBar = GameObject.Find("EatBar");
+        EatBarFill = GameObject.Find("EatBarFill").GetComponent<Image>();
     }
 
     public IEnumerator AddItem(string str, int amount)
@@ -121,16 +131,48 @@ public class InventoryManager : MonoBehaviour
         stackIndex = index;
     }
 
-    public void Eat()
+    public IEnumerator Eat()
     {
+        bool finished = false;
+        float fl = 0f;
         if (currentEquippedItem.type != ItemType.food || isEating || currentItemObj.GetComponent<Animation>().IsPlaying("Eat"))
         {
-            return;
+            yield break;
         }
         currentItemObj.GetComponent<Animation>().Play("Eat");
         GetComponent<AudioSource>().PlayOneShot(currentEquippedItem.gameObject.GetComponent<Food>().EatSound);
+        EatBar.GetComponent<Animation>().Play("FadeInEatBar");
+        while (Input.GetMouseButton(0) && !finished)
+        {
+            yield return new WaitForSeconds(0.01f);
+            fl += 0.01f * currentEquippedItem.gameObject.GetComponent<Food>().EatTimeMultiplier;
+            EatBarFill.fillAmount = fl;
+            if (fl >= 1f)
+            {
+                fl = 1f;
+                finished = true;
+                FinishEating();
+            }
+        }
+        if (!finished)
+        {
+            currentItemObj.GetComponent<Animation>().Stop();
+            GetComponent<AudioSource>().Stop();
+            EatBar.GetComponent<Animation>().Play("FadeOutEatBar");
+        }
+    }
+
+    public void FinishEating()
+    {
+        if (currentEquippedItem.name == "mushroom" && !GameEvents.GetInstance().eventsDone[0])
+        {
+            GameEvents.GetInstance().DoGameEvent(3);
+        }
         GetComponent<ValueController>().Hunger += currentEquippedItem.gameObject.GetComponent<Food>().HungerGive;
         stacks[stackIndex]--;
+        currentEquippedItem = Resources.Load<GameObject>("items/nothing").GetComponent<Item>();
+        Destroy(currentItemObj);
+        EatBar.GetComponent<Animation>().Play("FadeOutEatBar");
     }
 
     public void Shoot()
@@ -150,7 +192,7 @@ public class InventoryManager : MonoBehaviour
         switch(currentEquippedItem.type)
         {
             case ItemType.food:
-            Eat();
+            StartCoroutine(Eat());
             return;
 
             case ItemType.weapon:
