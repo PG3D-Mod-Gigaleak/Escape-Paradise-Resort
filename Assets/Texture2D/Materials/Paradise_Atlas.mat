@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Paradise_Atlas
-  m_Shader: {fileID: 10, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 41, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: 
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
@@ -24,7 +24,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _LightMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 5238fd3b64bf05748b468cda38969547, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -34,4 +34,4 @@ Material:
     m_Floats:
     - _Emission: 1
     m_Colors:
-    - _Color: {r: 0.509434, g: 0.509434, b: 0.509434, a: 1}
+    - _Color: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 1}

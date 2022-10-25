@@ -157,6 +157,9 @@ public class InventoryManager : MonoBehaviour
         if (!finished)
         {
             currentItemObj.GetComponent<Animation>().Stop();
+            currentItemObj.GetComponent<Animation>().Play("Eat");
+            yield return new WaitForSeconds(0.01f);
+            currentItemObj.GetComponent<Animation>().Stop();
             GetComponent<AudioSource>().Stop();
             EatBar.GetComponent<Animation>().Play("FadeOutEatBar");
         }
