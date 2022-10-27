@@ -50,10 +50,20 @@ public class ValueController : MonoBehaviour
         {
             if (mat.shader.name == "Legacy Shaders/Lightmapped/Diffuse")
             {
-                Debug.Log("found lightmapped diffuse");
                 if (time <= 0.9f)
                 {
                     mat.SetColor("_Color", new Color(1f-time, 1f-time, 1f-time, 1f));
+                }
+            }
+            if (mat.shader.name == "MADFINGER/Environment/Scroll 2 Layers Sine AlphaBlended" && time < 0.5f)
+            {
+                mat.SetColor("_Color", new Color(0.7f-time, 0.7f-time, 0.7f-time, 0.6f));
+            }
+            if (mat.shader.name == "iPhone/SolidTextureTwoSides" || mat.shader.name == "iPhone/AlphaBlend_TwoSides")
+            {
+                if (time <= 0.9f)
+                {
+                    mat.SetColor("_TintColor", new Color(1f-time, 1f-time, 1f-time, 1f));
                 }
             }
             GameObject.Find("sky_02").GetComponent<MeshRenderer>().material.SetFloat("_BlendAlpha", time);
