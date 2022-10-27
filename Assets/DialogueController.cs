@@ -61,6 +61,10 @@ public class DialogueController : MonoBehaviour
         int index = 0;
         while(index != message.Length && starting && !GetComponent<Animation>().IsPlaying("DialogueOff"))
         {
+            while (GameController.GamePaused())
+            {
+                yield return new WaitForSeconds(0.01f);
+            }
             text.text += message[index];
             GetComponent<AudioSource>().PlayOneShot(textSound);
             yield return new WaitForSeconds(GetLetterTime(message[index]));

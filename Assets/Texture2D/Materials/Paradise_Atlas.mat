@@ -34,4 +34,4 @@ Material:
     m_Floats:
     - _Emission: 1
     m_Colors:
-    - _Color: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 1}
+    - _Color: {r: 0.999997, g: 0.999997, b: 0.999997, a: 1}

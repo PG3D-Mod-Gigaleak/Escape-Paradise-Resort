@@ -6,6 +6,6 @@ public class GameController : MonoBehaviour
 {
     public static bool GamePaused()
     {
-        return GameObject.Find("Inventory").GetComponent<Inventory>().inventoryOpen || GameObject.Find("CraftIndicatorPopup").GetComponent<CraftIndicator>().CIOpened;
+        return GameObject.Find("Inventory").GetComponent<Inventory>().inventoryOpen || GameObject.Find("CraftIndicatorPopup").GetComponent<CraftIndicator>().CIOpened || CraftMenu.GetInstance().CMOpened;
     }
 }

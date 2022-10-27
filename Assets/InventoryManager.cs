@@ -245,6 +245,10 @@ public class InventoryManager : MonoBehaviour
         {
             if (!GameObject.Find("Inventory").GetComponent<Inventory>().inventoryOpen)
             {
+                if (CraftMenu.GetInstance().CMOpened)
+                {
+                    return;
+                }
                 GameObject.Find("Inventory").GetComponent<Animation>().Play("OpenInventory");
                 GameObject.Find("Inventory").GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("sounds/invopen"));
                 GameObject.Find("Inventory").GetComponent<Inventory>().inventoryOpen = true;

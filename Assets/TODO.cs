@@ -9,11 +9,14 @@ public class TODO : MonoBehaviour
 
     public int dialogueIndex;
 
+    public int NumOfTasks;
+
     public void AddToTodo(string task)
     {
         textSlots[dialogueIndex].GetComponent<TextMeshProUGUI>().text = task;
         textSlots[dialogueIndex].GetComponent<Animation>().Play("AddTask");
         dialogueIndex++;
+        NumOfTasks++;
         GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("sounds/todoadd"));
     }
 
@@ -34,6 +37,7 @@ public class TODO : MonoBehaviour
     {
         textSlots[index].GetComponent<Animation>().Play("RemoveTask");
         dialogueIndex = index;
+        NumOfTasks--;
         GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("sounds/todoremove"));
     }
 
